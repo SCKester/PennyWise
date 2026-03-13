@@ -1,0 +1,2 @@
+# PennyWise
+Money managing app
