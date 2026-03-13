@@ -1,2 +1,2 @@
-# PennyWise
-Money managing app
+# pennyWise
+

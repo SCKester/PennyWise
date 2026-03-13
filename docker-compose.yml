@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:15
+    container_name: pennywise-db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: pennywise
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: pennywise-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgres://admin:password123@db:5432/pennywise
+      FLASK_ENV: development
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    container_name: pennywise-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
